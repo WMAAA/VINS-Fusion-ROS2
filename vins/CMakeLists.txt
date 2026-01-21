@@ -20,8 +20,10 @@ find_package(cv_bridge REQUIRED)
 find_package(camera_models REQUIRED)
 find_package(image_transport REQUIRED)
 
-
+set(OpenCV_DIR "/home/wenming/opencv/opencv-4.9.0/lib/cmake/opencv4")
 find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 find_package(Ceres REQUIRED)
 
 include_directories(${CERES_INCLUDE_DIRS})
@@ -34,7 +36,6 @@ find_package(Eigen3)
 include_directories(
   ${EIGEN3_INCLUDE_DIR}
 )
-
 
 add_library(vins_lib
     src/estimator/parameters.cpp
@@ -53,6 +54,7 @@ add_library(vins_lib
     src/initial/initial_sfm.cpp
     src/initial/initial_ex_rotation.cpp
     src/featureTracker/feature_tracker.cpp)
+
 target_link_libraries(vins_lib  ${OpenCV_LIBS} ${CERES_LIBRARIES})
 
 ament_target_dependencies(vins_lib rclcpp rcpputils std_msgs visualization_msgs geometry_msgs nav_msgs tf2 tf2_ros cv_bridge camera_models image_transport)
